@@ -1,0 +1,223 @@
+# xiangjiandao 主配置文件
+replicaCount: 1
+
+image:
+  repository: example-repository
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+app:
+  productTenant: "xiangjiandao"
+skyAPM:
+  enabled: true
+appconfig: |
+  {
+    "App": {
+      "UseSkyAPM": false,
+      "UseFeiShu": false,
+      "SkyAPMWriteData": true,
+      "OfficialWebsite": "xiangjiandao.example.com",
+      "OfficialEmail": "xiangjiandao@example.com"
+    },
+    "Feishu": {
+      "ClientId": "client-id",
+      "ClientSecret": "example-client-secret"
+    },
+    "ConnectionStrings": {
+      "MySql": "Server=127.0.0.1;Port=3306;User ID=root;Password=example-password;Database=xiangjiandao;SslMode=none"
+    },
+    "Redis": {
+      "Host": "127.0.0.1",
+      "Port": 6379,
+      "Database": 1,
+      "Password": "example-password"
+    },
+    "RabbitMQ": {
+      "HostName": "example.com",
+      "Port": 5672,
+      "UserName": "example-user-name",
+      "Password": "example-password",
+      "VirtualHost": "xiangjiandao"
+    },
+    "Jwt": {
+      "SecretKey": "example-secret-key",
+      "iss": "xiangjiandao",
+      "Audience": "account",
+      "ExpirationInMinutes": 43200,
+      "Kid": "example-kid"
+    },
+    "Email": {
+      "SenderName": "example-sender-name",
+      "SenderAddress": "xiangjiandao@example.com",
+      "Subject": "example-subject",
+      "EmailServerHost": "example.email.host.com",
+      "EmailServerPort": 465,
+      "UserName": "example-user-name",
+      "Password": "example-password",
+      "SecureSocketOptions": 1
+    },
+    "Template": {
+      "MedalDistribution": "file-id",
+      "ScoreDistribution": "file-id"
+    },
+    "Exceptionless": {
+      "Enable": false
+    },
+    "AliYunSms":{
+      "AccessKeyId": "example-access-key-id",
+      "AccessKeySecret" : "example-key-secret",
+      "SignName": "example-sign-name",
+      "TemplateCode": "example-template-code",
+      "Endpoint": "example.endpoint.com"
+    },
+    "AliYunModeration": {
+      "EnableTextModeration": false,
+      "EnableImageModeration": false,
+      "AccessKeyId": "",
+      "AccessKeySecret" : "",
+      "Endpoint": "",
+      "RegionId": "",
+      "ImageCallbackUrl": ""
+    },
+    "BlueSky":{
+      "PdsDomain": "https://web5.example.com",
+      "BskyDomain": "https://bsky.example.com",
+      "PlcDomain": "https://plc.example.com",
+      "PostDomain": "https://post.example.com",
+      "EmailDomain": "web5.example.com",
+      "AdminToken": "example-admin-token"
+    },
+    "ReverseProxy": {
+      "Routes": {
+        "Bsky" : {
+          "ClusterId": "bsky",
+          "Match": {
+            "Path": "/bsky/xrpc/{**catch-all}"
+          },
+          "Transforms": [
+            { "PathPattern": "/xrpc/{**catch-all}" }
+          ]
+        },
+        "Pds" : {
+          "ClusterId": "pds",
+          "Match": {
+            "Path": "/pds/xrpc/{**catch-all}"
+          },
+          "Transforms": [
+            { "PathPattern": "/xrpc/{**catch-all}" }
+          ]
+        },
+        "Plc" : {
+          "ClusterId": "plc",
+          "Match": {
+            "Path": "/plc/{**catch-all}"
+          },
+          "Transforms": [
+            { "PathPattern": "/xrpc/{**catch-all}" }
+          ]
+        },
+        "Post" : {
+          "ClusterId": "post",
+          "Match": {
+            "Path": "/post/api/{**catch-all}"
+          },
+          "Transforms": [
+            { "PathPattern": "/api/{**catch-all}" }
+          ]
+        }
+      },
+      "Clusters": {
+        "bsky": {
+          "Destinations": {
+            "bsky1": {
+              "Address": "https://bsky.example.com"
+            }
+          }
+        },
+        "pds": {
+          "Destinations": {
+            "pds1": {
+              "Address": "https://web5.example.com"
+            }
+          }
+        },
+        "plc": {
+          "Destinations": {
+            "plc1": {
+              "Address": "https://plc.example.com"
+            }
+          }
+        },
+        "post": {
+          "Destinations": {
+            "post1": {
+              "Address": "https://post.example.com"
+            }
+          }
+        }
+      }
+    }
+  }
+
+ingress:
+  enabled: true
+  className: "className" # 替换为自定义的 className
+  annotations:
+    yarp.ingress.kubernetes.io/transforms: |
+      - RequestHeaderRemove: "rivtower-context"
+  hosts:
+    - host: xiangjiandao.example.com # 替换成自定义的前台域名
+      paths:
+        - path: /api
+          pathType: Prefix
+        - path: /devops
+          pathType: Prefix
+        - path: /post
+          pathType: Prefix
+        - path: /bsky
+          pathType: Prefix
+        - path: /pds
+          pathType: Prefix
+        - path: /plc
+          pathType: Prefix
+    - host: xiangjiandao-admin.example.com # 替换成自定义的后台域名
+      paths:
+        - path: /api
+          pathType: Prefix
+        - path: /post
+          pathType: Prefix
+  tls: [ ]
+
+dashboard:
+  ingress:
+    enabled: false
+    className: "className" # 替换成自定义的 className
+    annotations:
+      yarp.ingress.kubernetes.io/authorization-policy: feishu
+    hosts:
+      - host: xiangjiandao.example.com # 替换成自定义的前台域名
+        paths:
+          - path: /devops
+            pathType: ImplementationSpecific
+    tls: [ ]
+resources: { }
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }
+
+# 是否开启 pvc
+pvc:
+  enabled: true
+  name: xiangjiandao-storage
+  storage: 10Gi
+  storageClassName: example-class-name # 替换成自定义的 storageClassName

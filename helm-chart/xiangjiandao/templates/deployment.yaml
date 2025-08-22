@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "xiangjiandao.fullname" . }}
+  labels:
+    {{- include "xiangjiandao.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "xiangjiandao.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "xiangjiandao.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "xiangjiandao.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- if .Values.skyAPM.enabled }}
+            - name: App__UseSkyAPM
+              value: 'true'
+            - name: SKYWALKING__SERVICENAME
+              value: '{{ default  "main"  .Values.env.envName }}::{{ .Chart.Name }}'
+            {{- end }}
+            {{- if .Values.env.envName }}
+            - name: Env__ServiceEnv
+              value: {{ .Values.env.envName }}
+            {{- end }}
+            - name: Env__ServiceName
+              value: {{ .Chart.Name }}
+            - name: App__productTenant
+              value: {{ .Values.app.productTenant }}
+            - name: App__ServiceNamespace
+              value: {{ .Release.Namespace }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: appconfig
+              readOnly: true
+              mountPath: /app/appconfig.json
+              subPath: appconfig.json
+            {{- if .Values.pvc.enabled }}
+            - name: pvc-storage
+              readOnly: false
+              mountPath: /app/Data/
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: appconfig
+          configMap:
+            name: {{ include "xiangjiandao.fullname" . }}
+        {{- if .Values.pvc.enabled }}
+        - name: pvc-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}
+        {{- end }}

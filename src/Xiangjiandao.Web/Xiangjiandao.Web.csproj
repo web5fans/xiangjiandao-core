@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <UserSecretsId>d0317234-b689-4eb3-951e-ddae44b7f422</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AlibabaCloud.SDK.Dysmsapi20170525" Version="3.2.1" />
+    <PackageReference Include="AlibabaCloud.SDK.Green20220302" Version="2.22.0" />
+    <PackageReference Include="AspNet.Security.OAuth.Feishu" Version="9.0.0" />
+    <PackageReference Include="AspNet.Security.OAuth.Weixin" Version="9.0.0" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
+    <PackageReference Include="DistributedLock.Redis" Version="1.0.3" />
+    <PackageReference Include="Exceptionless.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Exceptionless.Extensions.Logging" Version="6.1.0" />
+    <PackageReference Include="FastEndpoints" Version="6.1.0" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="6.1.0" />
+    <PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.3.0" />
+    <PackageReference Include="KubernetesClient" Version="17.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
+    <PackageReference Include="NetCorePal.Dapper.Contrib" Version="1.50.10" />
+    <PackageReference Include="jwt" Version="10.0.2" />
+    <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.3.2" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="8.3.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.17" />
+    <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.4" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="$(EntityFrameworkVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(FrameworkVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="$(FrameworkVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFrameworkVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="9.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="NetCorePal.Context.AspNetCore" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Context.CAP" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Context.Shared" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.AspNetCore" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.DistributedLocks.Redis" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.DistributedTransactions.CAP.MySql" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.Jwt" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.Mappers" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.Snowflake.Consul" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.ServiceDiscovery.K8s" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.MultiEnv" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.MultiEnv.CAP.RabbitMQ" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.SkyApm.Diagnostics" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NPOI" Version="2.6.2" />
+    <PackageReference Include="Polly.Caching.IDistributedCache" Version="1.0.4" />
+    <PackageReference Include="Polly.Caching.Memory" Version="3.0.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Json.Newtonsoft" Version="9.0.0-preview.3.efcore.9.0.0" />
+    <PackageReference Include="NetCorePal.Extensions.MicrosoftServiceDiscovery" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.Primitives" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="NetCorePal.Extensions.Jwt.StackExchangeRedis" Version="$(NetCorePalVersion)" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Json.Microsoft" Version="9.0.0-preview.3.efcore.9.0.0" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
+    <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Enrichers.ClientInfo" Version="2.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
+    <PackageReference Include="SkyAPM.Agent.AspNetCore" Version="2.1.0.11" />
+    <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
+    <PackageReference Include="MailKit" Version="4.8.0" />
+    <PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xiangjiandao.Domain\Xiangjiandao.Domain.csproj" />
+    <ProjectReference Include="..\Xiangjiandao.Infrastructure\Xiangjiandao.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="10.3.0.106239">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+</Project>
