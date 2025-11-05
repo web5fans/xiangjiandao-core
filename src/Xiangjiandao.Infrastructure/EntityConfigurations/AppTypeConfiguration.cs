@@ -2,54 +2,52 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NetCorePal.Extensions.Domain;
 using NetCorePal.Extensions.Repository.EntityFrameworkCore;
-using Xiangjiandao.Domain.AggregatesModel.ScoreRecordAggregate;
-using Xiangjiandao.Domain.AggregatesModel.UserAggregate;
-using Xiangjiandao.Domain.Enums;
+using Xiangjiandao.Domain.AggregatesModel.AppAggregate;
 
 namespace Xiangjiandao.Infrastructure.EntityConfigurations;
 
-internal class ScoreRecordTypeConfiguration : IEntityTypeConfiguration<ScoreRecord>
+internal class AppTypeConfiguration : IEntityTypeConfiguration<App>
 {
-    public void Configure(EntityTypeBuilder<ScoreRecord> builder)
+    public void Configure(EntityTypeBuilder<App> builder)
     {
-        builder.ToTable("t_point_record");
+        builder.ToTable("t_app");
         builder.HasKey(t => t.Id);
         builder.Property(t => t.Id)
             .HasColumnName("id")
             .UseGuidVersion7ValueGenerator();
-        builder.Property(t => t.UserId)
-            .HasColumnName("user_id")
-            .HasComment("所属用户");
-        builder.Property(t => t.ParticipatorId)
-            .HasColumnName("participator_id")
-            .HasComment("积分记录的另一个参与用户 Id");
-        builder.Property(t => t.ParticipatorDomainName)
-            .HasColumnName("participator_domain_name")
+        builder.Property(t => t.Name)
+            .HasColumnName("name")
             .HasColumnType("varchar")
             .HasMaxLength(256)
             .HasDefaultValue(string.Empty)
-            .HasComment("参与方域名");
-        builder.Property(t => t.ParticipatorNickName)
-            .HasColumnName("participator_nick_name")
+            .HasComment("应用名称");
+        builder.Property(t => t.Desc)
+            .HasColumnName("desc")
             .HasColumnType("varchar")
-            .HasMaxLength(64)
+            .HasMaxLength(256)
             .HasDefaultValue(string.Empty)
-            .HasComment("参与方昵称");
-        builder.Property(t => t.Type)
-            .HasColumnName("type")
+            .HasComment("应用描述");
+        builder.Property(t => t.Logo)
+            .HasColumnName("logo")
+            .HasColumnType("varchar")
+            .HasMaxLength(256)
+            .HasDefaultValue(string.Empty)
+            .HasComment("应用图标");
+        builder.Property(t => t.Sort)
+            .HasColumnName("sort")
             .HasColumnType("int")
-            .HasDefaultValue(ScoreSourceType.Unknown)
-            .HasComment("积分来源类型");
-        builder.Property(t => t.Reason)
-            .HasColumnName("reason")
+            .HasComment("应用排序");
+        builder.Property(t => t.Link)
+            .HasColumnName("link")
             .HasColumnType("varchar")
-            .HasMaxLength(64)
+            .HasMaxLength(256)
             .HasDefaultValue(string.Empty)
-            .HasComment("获得原因");
-        builder.Property(t => t.Score)
-            .HasColumnName("score")
-            .HasColumnType("bigint")
-            .HasComment("积分数量");
+            .HasComment("应用链接");
+        builder.Property(t => t.RowVersion)
+            .HasColumnName("row_version")
+            .HasColumnType("int")
+            .HasDefaultValue(new RowVersion(0))
+            .HasComment("并发乐观锁");
         builder.Property(t => t.CreatedAt)
             .HasColumnName("created_at")
             .HasColumnType("datetime")

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NetCorePal.Extensions.DistributedTransactions.CAP.Persistence;
 using Xiangjiandao.Domain;
 using Xiangjiandao.Domain.AggregatesModel.AdminUserAggregate;
+using Xiangjiandao.Domain.AggregatesModel.AppAggregate;
 using Xiangjiandao.Domain.AggregatesModel.BannerAggregate;
 using Xiangjiandao.Domain.AggregatesModel.GlobalConfigAggregate;
 using Xiangjiandao.Domain.AggregatesModel.InformationAggregate;
@@ -117,5 +118,10 @@ namespace Xiangjiandao.Infrastructure
         /// 用户勋章
         /// </summary>
         public DbSet<Information> Informations => Set<Information>();
+
+        /// <summary>
+        /// 应用
+        /// </summary>
+        public DbSet<App> Apps => Set<App>();
     }
 }

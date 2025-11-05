@@ -10,7 +10,6 @@ namespace Xiangjiandao.Domain.AggregatesModel.ScoreRecordAggregate;
 /// </summary>
 public partial record ScoreRecordId : IGuidStronglyTypedId;
 
-
 /// <summary>
 /// 稻米记录
 /// </summary>
@@ -24,6 +23,21 @@ public class ScoreRecord : Entity<ScoreRecordId>, IAggregateRoot
     /// 所属用户
     /// </summary> 
     public UserId UserId { get; private set; } = null!;
+
+    /// <summary>
+    /// 积分记录的另一个参与用户 Id
+    /// </summary>
+    public UserId ParticipatorId { get; private set; } = null!;
+
+    /// <summary>
+    /// 参与方域名
+    /// </summary>
+    public string ParticipatorDomainName { get; private set; } = null!;
+
+    /// <summary>
+    /// 参与方昵称
+    /// </summary>
+    public string ParticipatorNickName { get; private set; } = null!;
 
     /// <summary>
     /// 稻米来源类型
@@ -69,19 +83,25 @@ public class ScoreRecord : Entity<ScoreRecordId>, IAggregateRoot
     /// 创建稻米记录
     ///</summary>
     public static ScoreRecord Create(
-       UserId userId,
-       ScoreSourceType type,
-       string reason,
-       long score
+        UserId userId,
+        UserId participatorId,
+        string participatorDomainName,
+        string participatorNickName,
+        ScoreSourceType type,
+        string reason,
+        long score
     )
     {
         var instance = new ScoreRecord
         {
-           UserId = userId,
-           Type = type,
-           Reason = reason,
-           Score = score,
-           CreatedAt = DateTimeOffset.Now,
+            UserId = userId,
+            ParticipatorId = participatorId,
+            ParticipatorDomainName = participatorDomainName,
+            ParticipatorNickName = participatorNickName,
+            Type = type,
+            Reason = reason,
+            Score = score,
+            CreatedAt = DateTimeOffset.Now,
         };
         instance.AddDomainEvent(new ScoreRecordCreatedDomainEvent(instance));
         return instance;
@@ -90,7 +110,8 @@ public class ScoreRecord : Entity<ScoreRecordId>, IAggregateRoot
     /// <summary>
     /// 软删除稻米记录
     /// </summary>
-    public bool Delete(){
+    public bool Delete()
+    {
         Deleted = true;
         return true;
     }

@@ -9,7 +9,7 @@ namespace Xiangjiandao.Web.Application.Commands;
 /// <summary>
 /// 创建稻米记录
 /// </summary>
-public record CreateScoreRecordCommand:  ICommand<ScoreRecordId>
+public record CreateScoreRecordCommand : ICommand<ScoreRecordId>
 {
     /// <summary>
     /// 所属用户
@@ -35,15 +35,18 @@ public record CreateScoreRecordCommand:  ICommand<ScoreRecordId>
 public class CreateScoreRecordCommandHandler(
     IScoreRecordRepository scoreRecordRepository,
     ILogger<CreateScoreRecordCommandHandler> logger) : ICommandHandler<CreateScoreRecordCommand, ScoreRecordId>
-{ 
+{
     public async Task<ScoreRecordId> Handle(CreateScoreRecordCommand command, CancellationToken cancellationToken)
     {
         logger.LogInformation("创建稻米明细");
         var scoreRecord = ScoreRecord.Create(
-            command.UserId,
-            command.Type,
-            command.Reason,
-            command.Score
+            userId: command.UserId,
+            participatorId: new UserId(Guid.Empty),
+            participatorDomainName: string.Empty,
+            participatorNickName: string.Empty,
+            type: command.Type,
+            reason: command.Reason,
+            score: command.Score
         );
         await scoreRecordRepository.AddAsync(scoreRecord, cancellationToken);
         return scoreRecord.Id;

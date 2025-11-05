@@ -65,16 +65,22 @@ public class CreateSendRewardScoreRecordCommandHandler(
 
         var record = new List<ScoreRecord>();
         record.Add(ScoreRecord.Create(
-            fromUser.Id,
-            command.Type,
-            $"{command.Reason}用户「 {toUser.DomainName} 」",
-            -1 * command.Score
+            userId: fromUser.Id,
+            participatorId: toUser.Id,
+            participatorDomainName: toUser.DomainName,
+            participatorNickName: toUser.NickName,
+            type: command.Type,
+            reason: $"{command.Reason}用户「 {toUser.DomainName} 」",
+            score: -1 * command.Score
         ));
         record.Add(ScoreRecord.Create(
-            toUser.Id,
-            command.Type,
-            $"用户「 {fromUser.DomainName} 」{command.Reason}",
-            command.Score
+            userId: toUser.Id,
+            participatorId: fromUser.Id,
+            participatorDomainName: fromUser.DomainName,
+            participatorNickName: fromUser.NickName,
+            type: command.Type,
+            reason: $"用户「 {fromUser.DomainName} 」{command.Reason}",
+            score: command.Score
         ));
         await scoreRecordRepository.AddRangeAsync(record, cancellationToken);
         return true;

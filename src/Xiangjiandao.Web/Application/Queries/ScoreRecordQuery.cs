@@ -44,6 +44,7 @@ public class ScoreRecordQuery(ApplicationDbContext dbContext)
                 Id = record.Id,
                 Score = record.Score,
                 Type = record.Type,
+                ParticipatorDomainName = record.ParticipatorDomainName,
                 Reason = record.Reason,
                 CreatedAt = record.CreatedAt,
             }).ToPagedDataAsync(

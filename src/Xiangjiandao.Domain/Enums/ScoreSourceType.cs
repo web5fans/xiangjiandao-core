@@ -41,7 +41,7 @@ public static class ScoreSourceTypeExtension{
         return scoreSourceType switch
         {
             ScoreSourceType.Unknown => "未知",
-            ScoreSourceType.Reward => "打赏",
+            ScoreSourceType.Reward => "赞赏",
             ScoreSourceType.Send => "赠送",
             ScoreSourceType.AdminDistribution => "后台发放",
             _ => throw new KnownException("非法的稻米来源类型")

@@ -257,6 +257,105 @@ namespace Xiangjiandao.Infrastructure.Migrations
                     b.ToTable("t_admin_user", (string)null);
                 });
 
+            modelBuilder.Entity("Xiangjiandao.Domain.AggregatesModel.AppAggregate.App", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("current_timestamp")
+                        .HasComment("创建时间");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("created_by")
+                        .HasComment("创建者");
+
+                    b.Property<sbyte>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((sbyte)0)
+                        .HasColumnName("deleted")
+                        .HasComment("是否删除");
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("desc")
+                        .HasComment("应用描述");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("link")
+                        .HasComment("应用链接");
+
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("logo")
+                        .HasComment("应用图标");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("name")
+                        .HasComment("应用名称");
+
+                    b.Property<int>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0)
+                        .HasColumnName("row_version")
+                        .HasComment("并发乐观锁");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int")
+                        .HasColumnName("sort")
+                        .HasComment("应用排序");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("current_timestamp")
+                        .HasComment("更新时间");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("updated_by")
+                        .HasComment("更新者");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("t_app", (string)null);
+                });
+
             modelBuilder.Entity("Xiangjiandao.Domain.AggregatesModel.BannerAggregate.Banner", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1029,6 +1128,29 @@ namespace Xiangjiandao.Infrastructure.Migrations
                         .HasDefaultValue((sbyte)0)
                         .HasColumnName("deleted")
                         .HasComment("是否删除");
+
+                    b.Property<string>("ParticipatorDomainName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("participator_domain_name")
+                        .HasComment("参与方域名");
+
+                    b.Property<Guid>("ParticipatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("participator_id")
+                        .HasComment("积分记录的另一个参与用户 Id");
+
+                    b.Property<string>("ParticipatorNickName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("")
+                        .HasColumnName("participator_nick_name")
+                        .HasComment("参与方昵称");
 
                     b.Property<string>("Reason")
                         .IsRequired()

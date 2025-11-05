@@ -6,7 +6,6 @@ using Xiangjiandao.Domain.AggregatesModel.UserAggregate;
 using Xiangjiandao.Domain.Enums;
 using Xiangjiandao.Web.Application.Queries;
 using Xiangjiandao.Web.Extensions;
-using Xiangjiandao.Web.Shared;
 using Xiangjiandao.Web.Utils;
 
 namespace Xiangjiandao.Web.Endpoints.AdminScore;
@@ -63,6 +62,11 @@ public class AdminUserScoreRecordPageVo
     /// 稻米来源类型
     /// </summary> 
     public ScoreSourceType Type { get; set; } = ScoreSourceType.Unknown;
+
+    /// <summary>
+    /// 参与方域名
+    /// </summary>
+    public string ParticipatorDomainName { get; set; } = string.Empty;
 
     /// <summary>
     /// 获得原因
